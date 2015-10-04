@@ -7,11 +7,12 @@ router.get('/', function(req, res, next) {
 });
 
 /*POST with some data*/
-router.post('/',  function(req, res, next) {
-  res.render('index', { first: req.body.first, second:req.body.second, third:req.body.third});
- console.log(req.body.first);
- console.log(req.body.second);
- console.log(req.body.third);
+router.post('/test',  function(req, res, next) {
+  //res.render('error', { first: req.body.first, second:req.body.second, third:req.body.third});
+ //res.send("you are here!");
+ console.log("we are here"); 
+ console.log(req.body.something);
+ res.render('result', {name: req.body.something});
   });
 
 module.exports = router;
