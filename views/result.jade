@@ -1,4 +1,9 @@
 doctype html
 html
+	head
+		script(type="text/javascript").
+			var recObjs= JSON.parse("#{records}");
+			console.log(recObjs)
 	body
-		What i got was #{name}
+		the thing is #{records}
+		

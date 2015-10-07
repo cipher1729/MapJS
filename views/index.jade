@@ -15,26 +15,30 @@ html
 			travelMode:google.maps.TravelMode.DRIVING,
 			unitSystem:google.maps.UnitSystem.METRIC,
 			};
-			directionService.route(request, function(result, status) {
-			if (status == google.maps.DirectionsStatus.OK) {
-			console.log("success!");
+			//directionService.route(request, function(result, status) {
+			//if (status == google.maps.DirectionsStatus.OK) {
+			//console.log("success!");
 			// Box the overview path of the first route
-			var path = result.routes[0].overview_path;
-			var boxes = rBoxer.box(path, distance);
-			console.log("No of points is" + result.routes[0].overview_path.length);
-			for (var i = 0; i < boxes.length; i++) {
-			var bounds = boxes[i];
+			//var path = result.routes[0].overview_path;
+			//var boxes = rBoxer.box(path, distance);
+			//console.log("No of points is" + result.routes[0].overview_path.length);
+			//for (var i = 0; i < boxes.length; i++) {
+			//var bounds = boxes[i];
 			// Perform search over this bounds
-			}
-			console.log("No of boxes is " + boxes.length);
-			console.log("Values gotten are" + #{first}); 
-			}
-			else
-			{
-			console.log("Failure");
-			}
-			});
+			//}
+			//console.log("No of boxes is " + boxes.length);
+			//console.log("Values gotten are" + #{first}); 
+			//}
+			//else
+			//{
+			//console.log("Failure");
+			//}
+			//});
 	body
 		form(name="test", action="http://localhost:3000/test", method="post")
-			input(type="text", name="something", id="first")
+			input(type="text", name="lat0", id="first")
+			input(type="text", name="lat1", id="second")
+			input(type="text", name="sizeField", id="addSize")
 			input(type="submit", value="add")
+			
+			

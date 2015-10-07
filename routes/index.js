@@ -1,18 +1,41 @@
 var express = require('express');
 var router = express.Router();
-
+var valueObject = {};
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/allPaths', function(req, res, next) {
+  var db = req.db;
+  var collection= db.get('usercollection');
+  collection.find({},{}, function(e,docs){
+	var conv = JSON.stringify(docs);
+	//console.log(docs);
+	console.log(conv);
+	res.render('result', { records: conv });
+  });
+  });
+
 
 /*POST with some data*/
-router.post('/test',  function(req, res, next) {
-  //res.render('error', { first: req.body.first, second:req.body.second, third:req.body.third});
- //res.send("you are here!");
- console.log("we are here"); 
- console.log(req.body.something);
- res.render('result', {name: req.body.something});
-  });
+router.post('/addPath',function(req, res, next) {
+  var origin = req.body.orgin;
+  var destination = req.body.destination;
+  var bounds= req.body.bounds;
+  var db = req.db;
+  var collection= db.get('usercollection');
+  collection.insert({"origin":origin,
+	"destination":destination,
+	"bounds":bounds
+	}, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            // And forward to success page
+            res.redirect("records");
+        }
+    });
+  
+});
+
 
 module.exports = router;
