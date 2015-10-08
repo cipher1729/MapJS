@@ -6,9 +6,14 @@ router.get('/allPaths', function(req, res, next) {
   var db = req.db;
   var collection= db.get('usercollection');
   collection.find({},{}, function(e,docs){
+	
+	//var conv = docs[0].replace(/\\"/g,'\\"');
+		console.log(docs);
+	
 	var conv = JSON.stringify(docs);
-	//console.log(docs);
 	console.log(conv);
+	//conv = conv.replace(/&quot;/g, '"');
+	
 	res.render('result', { records: conv });
   });
   });
