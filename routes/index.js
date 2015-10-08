@@ -21,7 +21,7 @@ router.get('/allPaths', function(req, res, next) {
 
 /*POST with some data*/
 router.post('/addPath',function(req, res, next) {
-  var origin = req.body.orgin;
+  var origin = req.body.origin;
   var destination = req.body.destination;
   var bounds= req.body.bounds;
   var db = req.db;
@@ -36,7 +36,7 @@ router.post('/addPath',function(req, res, next) {
         }
         else {
             // And forward to success page
-            res.redirect("records");
+            res.redirect("allPaths");
         }
     });
   
