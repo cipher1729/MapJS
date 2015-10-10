@@ -9,7 +9,6 @@ router.get('/allPaths', function(req, res, next) {
 	
 	//var conv = docs[0].replace(/\\"/g,'\\"');
 		console.log(docs);
-	
 	var conv = JSON.stringify(docs);
 	console.log(conv);
 	//conv = conv.replace(/&quot;/g, '"');
@@ -18,6 +17,11 @@ router.get('/allPaths', function(req, res, next) {
   });
   });
 
+ router.get('/test', function(req, res, next) {
+  res.send('Server is up');
+  });
+  
+  
 
 /*POST with some data*/
 router.post('/addPath',function(req, res, next) {

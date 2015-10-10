@@ -3,44 +3,76 @@ html
 	head
 		script(src='http://code.jquery.com/jquery-latest.min.js')
 		//Load Maps
-		script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAwd96WzMqV5K8p8JZwKCf2voxCgPFsYqY', type='text/javascript')
+		script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAwd96WzMqV5K8p8JZwKCf2voxCgPFsYqY&libraries=places', type='text/javascript')
 		script(type="text/javascript").
 			var test="#{records}";
+			var latNE={};
+			var latSW={};
+			var longNE={};
+			var longSW={};
 			
-			console.log(test);
+			//console.log(test);
 			var newtest = test.replace(/&quot;/g,'"');
 			var recordArray = JSON.parse(newtest);
-			console.log(recordArray.length);
+			//console.log(recordArray.length);
 			$(document).ready(function()
 			{	
-				console.log(recordArray[0].origin);			
+				//console.log(recordArray[0].origin);			
 				for(var i=0;i<recordArray.length;i++)
 				{
 						$("#holder").append(recordArray[i].origin+"  ");
 						//$("#holder").append("<br>");
 						$("#holder").append(recordArray[i].destination+"  ");
-						//$("#holder").append("<br>");
-						//iterate over all boxes
+						//initialize maps here
+						var map = new google.maps.Map(document.getElementById("mapHolder"));
+						var service = new google.maps.places.PlacesService(map);
+						
 						for(var j=0;j<recordArray[i].bounds.length;j++)
 						{
-							var latNE = recordArray[i].bounds[j].latNE;
-							var longNE = recordArray[i].bounds[j].longNE;
-							var latSW = recordArray[i].bounds[j].latSW;
-							var longSW = recordArray[i].bounds[j].longSW;
+							latNE = recordArray[i].bounds[j].latNE;
+							longNE = recordArray[i].bounds[j].longNE;
+							latSW = recordArray[i].bounds[j].latSW;
+							longSW = recordArray[i].bounds[j].longSW;
+							console.log(recordArray[i].bounds)
 							$("#holder").append(recordArray[i].bounds[j].latNE+"  ");
 							$("#holder").append(recordArray[i].bounds[j].longNE+"  ");
 							$("#holder").append(recordArray[i].bounds[j].latSW+"  ");
 							$("#holder").append(recordArray[i].bounds[j].longSW+"  ");	
-							
 							//ping the places API here
+							
 						}
-						
+							
+							var swPoint = new google.maps.LatLng(25.767368,-82.18930);
+							var nePoint = new google.maps.LatLng(27.12333, -81.14444);
+							//console.log( swPoint.lat());
+							var searchBounds= new google.maps.LatLngBounds(swPoint, nePoint);
+							var request= {bounds: searchBounds, name:"walmart"};
+							console.log(request);
+							service.nearbySearch(request, callback);
+							function callback(results, status) {
+							if (status == google.maps.places.PlacesServiceStatus.OK) {
+							for (var i = 0; i < results.length; i++) {
+							var place = results[i];
+							console.log(place.name);
+							console.log(place.vicinity);
+							$("#holder").append("<br>");
+							$("#holder").append("Place_Name: " + place.name);
+							$("#holder").append(" Place_Vicinity: "+ place.vicinity);
+						}
+					}
 				}
+				}
+				
+				
+
 			});
+		
 			
 			
 	body
 		div#holder 
+		div(id="mapHolder", style="display:none]")
+		
 		
 		
 		
